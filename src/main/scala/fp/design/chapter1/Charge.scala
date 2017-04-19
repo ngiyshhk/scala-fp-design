@@ -1,4 +1,4 @@
-package ngiy.fp.design.chapter1
+package fp.design.chapter1
 
 case class Charge(cc: CreditCard, amount: Double) {
   def combine(other: Charge) = {

@@ -1,4 +1,4 @@
-package ngiy.fp.design.chapter1
+package fp.design.chapter1
 
 class Cafe {
   def buyCoffee1(cc: CreditCard): Coffee = {
