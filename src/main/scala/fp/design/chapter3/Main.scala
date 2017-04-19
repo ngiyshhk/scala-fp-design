@@ -203,7 +203,7 @@ object Main extends App {
 
   // TODO foldRightとListのデータコンストラクタとの関係について何を表しているの？
   def ex3_8(): Unit = {
-    println(foldRight(List(1, 2, 3), Nil)((x, y) => Cons(x, y)))
+    println(foldRight(List(1, 2, 3), Nil: List[Int])((x, y) => Cons(x, y)))
   }
 
 //  ex3_8()
