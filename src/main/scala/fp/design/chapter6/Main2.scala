@@ -28,11 +28,34 @@ object Main2 {
 
   object State {
     def unit[S, A](a: A): State[S, A] = State(s => (a, s))
+    val int: Rand[Int] = _.nextInt
     def sequence[S, A](fs: List[State[S, A]]): State[S, List[A]] = {
-      def go
+      def go(s: S, actions: List[State[S,A]], acc: List[A]): (List[A],S) =
+        actions match {
+          case Nil => (acc.reverse,s)
+          case h :: t => h.run(s) match { case (a,s2) => go(s2, t, a :: acc) }
+        }
+      State((s: S) => go(s,fs,List()))
     }
+    def nonNegativeInt(rng: RNG): (Int, RNG) = {
+      val (n, rng2) = rng.nextInt
+      if (n >= 0) (n, rng2)
+      else ((n + 1) * -1, rng2)
+    }
+    def ints(count: Int)(rng: RNG): (List[Int], RNG) = count match {
+      case 0 => (Nil, rng)
+      case _ =>
+        val (n, rng2) = nonNegativeInt(rng)
+        val (ns, rng3) = ints(count - 1)(rng2)
+        (n::ns, rng3)
+    }
+
   }
 
   type Rand[A] = State[RNG, A]
 
+
+  val ns = for {
+    x <- in
+  }
 }
